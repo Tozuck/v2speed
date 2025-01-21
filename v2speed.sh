@@ -1,11 +1,24 @@
 #!/bin/bash
 
+
+
 apt-get update; apt-get install curl socat git nload -y
 
-curl -fsSL https://get.docker.com | sh
+if ! command -v docker &> /dev/null; then
+  curl -fsSL https://get.docker.com | sh || echo_error "Docker installation failed."
+else
+  echo_info "Docker is already installed."
+fi
+
+rm -r Marzban-node
 
 git clone https://github.com/Gozargah/Marzban-node
+
+rm -r /var/lib/marzban-node
+
 mkdir /var/lib/marzban-node
+
+rm ~/Marzban-node/docker-compose.yml
 
 cat <<EOL > ~/Marzban-node/docker-compose.yml
 services:
@@ -21,6 +34,8 @@ services:
     volumes:
       - /var/lib/marzban-node:/var/lib/marzban-node
 EOL
+
+rm /var/lib/marzban-node/ssl_client_cert.pem
 
 cat <<EOL > /var/lib/marzban-node/ssl_client_cert.pem
 -----BEGIN CERTIFICATE-----
