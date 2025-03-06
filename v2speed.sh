@@ -1,6 +1,12 @@
 #!/bin/bash
 
-
+echo_info() {
+  echo -e "\033[1;32m[INFO]\033[0m $1"
+}
+echo_error() {
+  echo -e "\033[1;31m[ERROR]\033[0m $1"
+  exit 1
+}
 
 apt-get update; apt-get install curl socat git nload -y
 
@@ -69,3 +75,14 @@ EOL
 
 cd ~/Marzban-node
 docker compose up -d
+
+echo_info "Finalizing UFW setup..."
+
+ufw allow 22
+ufw allow 80
+ufw allow 2053
+ufw allow 62050
+ufw allow 62051
+
+ufw --force enable
+ufw reload
