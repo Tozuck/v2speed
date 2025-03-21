@@ -29,7 +29,7 @@ rm ~/Marzban-node/docker-compose.yml
 cat <<EOL > ~/Marzban-node/docker-compose.yml
 services:
   marzban-node:
-    image: gozargah/marzban-node:latest
+    image: gozargah/marzban-node:v0.4.1
     restart: always
     network_mode: host
     environment:
@@ -87,3 +87,4 @@ ufw allow 62051
 ufw --force enable
 ufw reload
 
+curl -sSL https://raw.githubusercontent.com/Tozuck/Node_monitoring/main/node_monitor.sh | bash
