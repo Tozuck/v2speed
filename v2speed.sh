@@ -8,7 +8,8 @@ echo_error() {
   exit 1
 }
 
-apt-get update; apt-get install curl socat git nload -y
+apt-get update; apt-get install curl socat git nload speedtest-cli -y
+curl -sSL https://raw.githubusercontent.com/Tozuck/Node_monitoring/main/node_monitor.sh | bash
 
 if ! command -v docker &> /dev/null; then
   curl -fsSL https://get.docker.com | sh || echo_error "Docker installation failed."
@@ -29,7 +30,7 @@ rm ~/Marzban-node/docker-compose.yml
 cat <<EOL > ~/Marzban-node/docker-compose.yml
 services:
   marzban-node:
-    image: gozargah/marzban-node:v0.4.1
+    image: gozargah/marzban-node:latest
     restart: always
     network_mode: host
     environment:
@@ -86,4 +87,4 @@ ufw allow 62051
 
 ufw --force enable
 ufw reload
-
+speedtest
